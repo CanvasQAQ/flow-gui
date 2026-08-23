@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=69"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "flow-backend"
+version = "0.1.0"
+description = "Local workflow backend for FlowPilot"
+requires-python = ">=3.11"
+dependencies = [
+  "fastapi>=0.115,<1",
+  "uvicorn>=0.34,<1",
+]
+
+[project.optional-dependencies]
+dev = [
+  "httpx>=0.28,<1",
+  "pytest>=8,<9",
+]
+parquet = ["duckdb>=1.2,<2"]
+
+[project.scripts]
+flow-backend = "flow_backend.__main__:main"
+flow-batch-runner = "flow_backend.runner:main"
+flow-admin = "flow_backend.admin:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]

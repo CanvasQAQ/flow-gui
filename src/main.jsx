@@ -1,42 +1,34 @@
-import { StrictMode, useEffect } from 'react';
+import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import { ConfigProvider, App as AntApp } from 'antd';
 import './index.css';
 import { AppProvider, useApp } from './store/appStore';
 import MainView from './components/MainView';
 
-function TickSimulator() {
-  const { state, dispatch } = useApp();
-  useEffect(() => {
-    if (state.runState !== 'running') return undefined;
-    const t = setInterval(() => {
-      dispatch({ type: 'ADVANCE_CORNERS', scope: 'all' });
-    }, 1500);
-    return () => clearInterval(t);
-  }, [state.runState, dispatch]);
-  return null;
-}
-
-function Root() {
+function ThemedApp() {
+  const { state } = useApp();
   return (
     <ConfigProvider
+      wave={{ disabled: !state.animationsEnabled }}
       theme={{
         token: {
-          colorPrimary: '#1677ff',
-          borderRadius: 4,
-          fontSize: 13,
+          colorPrimary: '#3459d6',
+          borderRadius: 8,
+          fontSize: 14,
           fontFamily: "-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif",
+          motion: state.animationsEnabled,
         },
       }}
     >
       <AntApp>
-        <AppProvider>
-          <TickSimulator />
-          <MainView />
-        </AppProvider>
+        <MainView />
       </AntApp>
     </ConfigProvider>
   );
+}
+
+function Root() {
+  return <AppProvider><ThemedApp /></AppProvider>;
 }
 
 createRoot(document.getElementById('root')).render(

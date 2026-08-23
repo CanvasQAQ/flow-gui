@@ -1,0 +1,71 @@
+{
+  "dataset": {
+    "spPattern": "^(?P<stem>.+)\\.sp(?P<corner>[^/]*)$",
+    "mtTemplate": "{stem}.mt{corner}",
+    "recursive": false
+  },
+  "hspice": {
+    "initialFields": {
+      "rangesel": "rangeselcode",
+      "vrefsel_0": "vrefsel0code",
+      "vrefsel_90": "vrefsel90code",
+      "vrefsel_180": "vrefsel180code",
+      "vrefsel_270": "vrefsel270code",
+      "legsel_0": "legsel0code",
+      "legsel_90": "legsel90code",
+      "legsel_180": "legsel180code",
+      "legsel_270": "legsel270code"
+    },
+    "resultFields": {
+      "loss_0": "loss_0",
+      "loss_90": "loss_90",
+      "loss_180": "loss_180",
+      "loss_270": "loss_270"
+    },
+    "pvtParameterNames": {
+      "vdd": "vdd",
+      "vcm": "vcm"
+    },
+    "simulatorCommand": ["hspice", "-i", "{sp_path}", "-o", "simulation"],
+    "expectedFiles": ["simulation.lis"]
+  },
+  "lsf": {
+    "queue": "normal",
+    "project": null,
+    "resource": "rusage[mem=4096]",
+    "application": null,
+    "arrayConcurrency": null,
+    "extraArgs": [],
+    "submitTimeoutSeconds": 120,
+    "dryRun": true
+  },
+  "snapshot": {
+    "path": "/replace/with/public/bjobs.parquet",
+    "columns": {
+      "job_id": "JOBID",
+      "job_name": "JOB_NAME",
+      "status": "STAT",
+      "array_index": "JOB_INDEX",
+      "exit_code": "EXIT_CODE",
+      "execution_host": "EXEC_HOST"
+    }
+  },
+  "scratch": {
+    "root": "/SCRATCH",
+    "user": null,
+    "sshProgram": "ssh",
+    "sshTimeoutSeconds": 300,
+    "realMachineVerificationRequired": true
+  },
+  "postprocess": {
+    "command": ["/replace/with/postprocess", "--stage", "{stage_path}"],
+    "mtFilePattern": "*.mt0",
+    "maxConcurrency": 1
+  },
+  "algorithms": {
+    "reference-search": {
+      "factory": "site_algorithms.reference:create_algorithm",
+      "config": {}
+    }
+  }
+}

@@ -1,16 +1,39 @@
-# React + Vite
+# FlowPilot GUI
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+## Real-machine integration
 
-Currently, two official plugins are available:
+The UI and Electron supervisor are connected to the local Backend. Demo data is
+still used for isolated UI scenarios and for algorithm-specific result charts
+whose production presentation contract has not yet been implemented.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+For the first LSF/HSPICE machine bring-up, start with
+[`backend/docs/ON_MACHINE_AGENT_GUIDE.md`](backend/docs/ON_MACHINE_AGENT_GUIDE.md).
+The detailed boundaries and acceptance sequence are in
+[`backend/docs/INTEGRATION_CONTRACTS.md`](backend/docs/INTEGRATION_CONTRACTS.md)
+and [`backend/docs/REAL_MACHINE_CHECKLIST.md`](backend/docs/REAL_MACHINE_CHECKLIST.md).
+Algorithm packages and Results renderers follow
+[`backend/docs/ALGORITHM_PRESENTATION_CONTRACT.md`](backend/docs/ALGORITHM_PRESENTATION_CONTRACT.md).
 
-## React Compiler
+## Frontend Demo mode
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Run the Electron application against an isolated, in-memory Demo Backend:
 
-## Expanding the Oxlint configuration
+```bash
+npm run demo
+```
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+The Demo Backend uses port `8766`, never reads or writes the production database,
+and resets to the same deterministic data whenever it starts. The main frontend
+mutations and server-sent update events are supported.
+
+Additional UI scenarios:
+
+```bash
+npm run demo:failures
+npm run demo:large
+npm run demo:empty
+```
+
+- `demo:failures` emphasizes recovery and error states.
+- `demo:large` returns 5,000 Corners for performance and layout checks.
+- `demo:empty` returns no datasets or runs for empty-state work.

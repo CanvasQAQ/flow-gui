@@ -6,6 +6,10 @@
   "type": "module",
   "scripts": {
     "dev": "concurrently -k -n VITE,ELECTRON -c blue,magenta \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "demo": "cross-env FLOWPILOT_DEMO=1 FLOWPILOT_DEMO_SCENARIO=default FLOWPILOT_BACKEND_PORT=8766 FLOWPILOT_BACKEND_URL=http://127.0.0.1:8766 VITE_BACKEND_URL=http://127.0.0.1:8766 concurrently -k -n VITE,DEMO -c blue,magenta \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "demo:failures": "cross-env FLOWPILOT_DEMO=1 FLOWPILOT_DEMO_SCENARIO=failures FLOWPILOT_BACKEND_PORT=8766 FLOWPILOT_BACKEND_URL=http://127.0.0.1:8766 VITE_BACKEND_URL=http://127.0.0.1:8766 concurrently -k -n VITE,DEMO -c blue,magenta \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "demo:large": "cross-env FLOWPILOT_DEMO=1 FLOWPILOT_DEMO_SCENARIO=large FLOWPILOT_BACKEND_PORT=8766 FLOWPILOT_BACKEND_URL=http://127.0.0.1:8766 VITE_BACKEND_URL=http://127.0.0.1:8766 concurrently -k -n VITE,DEMO -c blue,magenta \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
+    "demo:empty": "cross-env FLOWPILOT_DEMO=1 FLOWPILOT_DEMO_SCENARIO=empty FLOWPILOT_BACKEND_PORT=8766 FLOWPILOT_BACKEND_URL=http://127.0.0.1:8766 VITE_BACKEND_URL=http://127.0.0.1:8766 concurrently -k -n VITE,DEMO -c blue,magenta \"vite\" \"wait-on http://localhost:5173 && cross-env NODE_ENV=development electron .\"",
     "build": "vite build",
     "lint": "oxlint",
     "preview": "vite preview",
